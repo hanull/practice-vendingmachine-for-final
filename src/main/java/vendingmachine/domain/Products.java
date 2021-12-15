@@ -44,11 +44,9 @@ public class Products {
 	}
 
 	public Product selectProduct(String productName) {
-		for (Product product : products) {
-			if (product.getName().equals(productName)) {
-				return product;
-			}
-		}
-		throw new IllegalArgumentException(Message.ERROR_NOT_FOUND_PRODUCT);
+		return products.stream()
+			.filter(pn -> pn.getName().equals(productName))
+			.findFirst()
+			.orElseThrow(() -> new IllegalArgumentException(Message.ERROR_NOT_FOUND_PRODUCT));
 	}
 }

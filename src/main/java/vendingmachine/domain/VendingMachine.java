@@ -36,10 +36,10 @@ public class VendingMachine {
 		userMoney.showStatus();
 	}
 
-	public Product selectProduct(String productName) {
-		Product selectProduct = products.selectProduct(productName);
-		userMoney.spendMoney(selectProduct.getPrice());
-		return selectProduct;
+	public void selectProduct(String productName) {
+		Product purchaseProduct = products.selectProduct(productName);
+		purchaseProduct.decrease();
+		userMoney.spendMoney(purchaseProduct.getPrice());
 	}
 
 	public void returnChanges() {

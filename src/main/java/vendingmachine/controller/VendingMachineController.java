@@ -32,13 +32,13 @@ public class VendingMachineController {
 		}
 	}
 
-	private Product selectProduct() {
+	private void selectProduct() {
 		try {
 			OutputView.printInputSelectProduct();
-			return vendingMachine.selectProduct(InputView.inputSelectProduct());
+			vendingMachine.selectProduct(InputView.inputSelectProduct());
 		} catch (IllegalArgumentException exception) {
 			OutputView.printException(exception);
-			return selectProduct();
+			selectProduct();
 		}
 	}
 

@@ -29,6 +29,10 @@ public class Product {
 		}
 	}
 
+	public void decrease() {
+		this.quantity--;
+	}
+
 	public int getQuantity() {
 		return quantity;
 	}
