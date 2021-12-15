@@ -11,4 +11,8 @@ public class OutputView {
 	public static void printException(IllegalArgumentException exception) {
 		System.out.println(Message.ERROR + exception.getMessage());
 	}
+
+	public static void printCoinStatus(StringBuilder coinStatus) {
+		System.out.println(coinStatus);
+	}
 }

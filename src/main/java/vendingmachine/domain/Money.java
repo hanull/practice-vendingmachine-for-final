@@ -1,5 +1,6 @@
 package vendingmachine.domain;
 
+import vendingmachine.constant.Constant;
 import vendingmachine.utils.ValidateUtils;
 
 public class Money {
@@ -18,5 +19,17 @@ public class Money {
 		if (!ValidateUtils.isDivideByMinimumCoin(Integer.parseInt(money))) {
 			throw new IllegalArgumentException("10원으로 나누어떨어지지 않습니다.");
 		}
+	}
+
+	public boolean hasMoreMoney() {
+		return money > Constant.ZERO;
+	}
+
+	public void spendMoney(int amount) {
+		money -= amount;
+	}
+
+	public boolean isOverPay(int pickAmount) {
+		return pickAmount > money;
 	}
 }
