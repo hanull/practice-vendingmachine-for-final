@@ -1,6 +1,7 @@
 package vendingmachine.domain;
 
 import vendingmachine.constant.Constant;
+import vendingmachine.constant.Message;
 import vendingmachine.utils.ValidateUtils;
 
 public class Money {
@@ -14,10 +15,10 @@ public class Money {
 
 	private void validateInputMoney(String money) {
 		if (!ValidateUtils.isDigit(money)) {
-			throw new IllegalArgumentException("숫자가 아니거나, 음수입니다. 양의 정수만 입력해주세요.");
+			throw new IllegalArgumentException(Message.ERROR_NOT_DIGIT);
 		}
 		if (!ValidateUtils.isDivideByMinimumCoin(Integer.parseInt(money))) {
-			throw new IllegalArgumentException("10원으로 나누어떨어지지 않습니다.");
+			throw new IllegalArgumentException(Message.ERROR_INVALID_PRICE);
 		}
 	}
 
