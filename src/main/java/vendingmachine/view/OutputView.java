@@ -19,4 +19,8 @@ public class OutputView {
 	public static void printInputProducts() {
 		System.out.println(Message.INPUT_PRODUCTS);
 	}
+
+	public static void printInputUserMoney() {
+		System.out.println(Message.INPUT_USER_MONEY);
+	}
 }

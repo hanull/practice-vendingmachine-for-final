@@ -33,4 +33,8 @@ public class Money {
 	public boolean isOverPay(int pickAmount) {
 		return pickAmount > money;
 	}
+
+	public boolean isEnough(int minimumProductPrice) {
+		return money >= minimumProductPrice;
+	}
 }

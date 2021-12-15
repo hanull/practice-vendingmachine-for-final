@@ -17,6 +17,25 @@ public class VendingMachineController {
 		Money vendingMachineMoney = getVendingMachineMoney();
 		vendingMachine.generateVendingMachineCoins(vendingMachineMoney);
 		addProducts();
+		Money userMoney = getUserMoney();
+		vendingMachine.insertUserMoney(userMoney);
+		purchaseProduct();
+	}
+
+	private void purchaseProduct() {
+		while (vendingMachine.isPossibleToSell()) {
+			
+		}
+	}
+
+	private Money getUserMoney() {
+		try {
+			OutputView.printInputUserMoney();
+			return InputView.InputUserMoney();
+		} catch (IllegalArgumentException exception) {
+			OutputView.printException(exception);
+			return getUserMoney();
+		}
 	}
 
 	private void addProducts() {

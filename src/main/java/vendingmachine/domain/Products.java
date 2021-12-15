@@ -10,7 +10,7 @@ import vendingmachine.constant.Message;
 
 public class Products {
 
-	private List<Product> products;
+	private final List<Product> products;
 
 	public Products(List<Product> products) {
 		this.products = products;
@@ -28,5 +28,17 @@ public class Products {
 
 	private static boolean isDuplicate(List<Product> productList) {
 		return productList.size() != new HashSet<>(productList).size();
+	}
+
+	public boolean isSoldOut() {
+		return products.stream()
+			.anyMatch(product -> product.getQuantity() != Constant.ZERO);
+	}
+
+	public int findMinimumProductPrice() {
+		return products.stream()
+			.map(Product::getPrice)
+			.min((o1, o2) -> o1 - o2)
+			.get();
 	}
 }

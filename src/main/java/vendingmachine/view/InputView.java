@@ -5,12 +5,21 @@ import vendingmachine.domain.Money;
 import vendingmachine.domain.Products;
 
 public class InputView {
+
+	private static String input() {
+		return Console.readLine();
+	}
+
 	public static Money InputVendingMachineCoin() {
-		return new Money(Console.readLine());
+		return new Money(input());
 	}
 
 	public static Products InputProducts() {
-		String inputProducts = Console.readLine();
+		String inputProducts = input();
 		return Products.createProducts(inputProducts);
+	}
+
+	public static Money InputUserMoney() {
+		return new Money(input());
 	}
 }
