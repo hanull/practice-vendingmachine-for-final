@@ -10,16 +10,20 @@ public class InputView {
 		return Console.readLine();
 	}
 
-	public static Money InputVendingMachineCoin() {
+	public static Money inputVendingMachineCoin() {
 		return new Money(input());
 	}
 
-	public static Products InputProducts() {
+	public static Products inputProducts() {
 		String inputProducts = input();
 		return Products.createProducts(inputProducts);
 	}
 
-	public static Money InputUserMoney() {
+	public static Money inputUserMoney() {
 		return new Money(input());
+	}
+
+	public static String inputSelectProduct() {
+		return input();
 	}
 }

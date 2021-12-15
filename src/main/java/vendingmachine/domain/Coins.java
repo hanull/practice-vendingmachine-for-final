@@ -13,23 +13,27 @@ public class Coins {
 
 	public Coins(Money vendingMachineMoney) {
 		this.coins = initialize();
-		changeToCoin(vendingMachineMoney);
+		vendingMachineMoneyChangeToCoin(vendingMachineMoney);
 	}
 
-	private void changeToCoin(Money vendingMachineMoney) {
+	public Coins(Map<Coin, Integer> changeCoins) {
+		this.coins = changeCoins;
+	}
+
+	private void vendingMachineMoneyChangeToCoin(Money vendingMachineMoney) {
 		while (vendingMachineMoney.hasMoreMoney()) {
 			int pickAmount = Randoms.pickNumberInList(Coin.getList());
 			if (vendingMachineMoney.isOverPay(pickAmount)) {
 				continue;
 			}
 			Coin pickCoin = Coin.from(pickAmount);
-			addCoin(pickCoin);
+			addCoin(pickCoin, Constant.ONE);
 			vendingMachineMoney.spendMoney(pickAmount);
 		}
 	}
 
-	private void addCoin(Coin pickCoin) {
-		coins.put(pickCoin, coins.get(pickCoin) + 1);
+	private void addCoin(Coin pickCoin, int addQuantity) {
+		coins.put(pickCoin, coins.get(pickCoin) + addQuantity);
 	}
 
 	private Map<Coin, Integer> initialize() {
@@ -43,14 +47,56 @@ public class Coins {
 	public void showStatus() {
 		StringBuilder status = new StringBuilder();
 		for (Coin coin : coins.keySet()) {
-			status.append(coin.getAmount())
-				.append(Constant.WON)
-				.append(Constant.DASH)
-				.append(coins.get(coin))
-				.append(Constant.EA)
-				.append(Constant.NEWLINE)
-			;
+			addCoinStatus(status, coin);
 		}
 		OutputView.printCoinStatus(status);
+	}
+
+	public void showChangeStatus() {
+		OutputView.printChanges();
+		StringBuilder status = new StringBuilder();
+		for (Coin coin : coins.keySet()) {
+			if (coins.get(coin) == Constant.ZERO) {
+				continue;
+			}
+			addCoinStatus(status, coin);
+		}
+		OutputView.printCoinStatus(status);
+	}
+
+	private void addCoinStatus(StringBuilder status, Coin coin) {
+		status.append(coin.getAmount())
+			.append(Constant.WON)
+			.append(Constant.DASH)
+			.append(coins.get(coin))
+			.append(Constant.EA)
+			.append(Constant.NEWLINE)
+		;
+	}
+
+	public Coins generateChangeCoin(Money userMoney) {
+		Map<Coin, Integer> changeCoins = initialize();
+		for (Coin coin : coins.keySet()) {
+			if (isPossibleChangeToCoin(userMoney, coin)) {
+				addUserChangeCoin(userMoney, changeCoins, coin);
+			}
+		}
+		return new Coins(changeCoins);
+	}
+
+	private void addUserChangeCoin(Money userMoney, Map<Coin, Integer> changeCoins, Coin coin) {
+		int amount = coin.getAmount();
+		int leftCoinOfVendingMachine = coins.get(coin);
+		int changeableAmount = amount * leftCoinOfVendingMachine;
+		int changedQuantity = changeableAmount / amount;
+		if (changeableAmount != Constant.ZERO) {
+			changeCoins.put(coin, changeCoins.get(coin) + changedQuantity);
+			coins.put(coin, coins.get(coin) - changedQuantity);
+			userMoney.spendMoney(amount * changedQuantity);
+		}
+	}
+
+	private boolean isPossibleChangeToCoin(Money userMoney, Coin coin) {
+		return userMoney.hasMoreMoney() && coins.get(coin) != Constant.ZERO;
 	}
 }

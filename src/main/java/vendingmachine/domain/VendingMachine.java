@@ -20,7 +20,7 @@ public class VendingMachine {
 	}
 
 	public boolean isPossibleToSell() {
-		return !isSoldOut() && isEnoughUserMoney();
+		return isNotSoldOut() && isEnoughUserMoney();
 	}
 
 	private boolean isEnoughUserMoney() {
@@ -28,7 +28,23 @@ public class VendingMachine {
 		return userMoney.isEnough(minimumProductPrice);
 	}
 
-	private boolean isSoldOut() {
-		return products.isSoldOut();
+	private boolean isNotSoldOut() {
+		return products.isNotSoldOut();
+	}
+
+	public void showUserMoneyStatus() {
+		userMoney.showStatus();
+	}
+
+	public Product selectProduct(String productName) {
+		Product selectProduct = products.selectProduct(productName);
+		userMoney.spendMoney(selectProduct.getPrice());
+		return selectProduct;
+	}
+
+	public void returnChanges() {
+		userMoney.showStatus();
+		Coins userCoins = coins.generateChangeCoin(userMoney);
+		userCoins.showChangeStatus();
 	}
 }

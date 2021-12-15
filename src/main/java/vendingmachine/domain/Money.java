@@ -3,6 +3,7 @@ package vendingmachine.domain;
 import vendingmachine.constant.Constant;
 import vendingmachine.constant.Message;
 import vendingmachine.utils.ValidateUtils;
+import vendingmachine.view.OutputView;
 
 public class Money {
 
@@ -36,5 +37,9 @@ public class Money {
 
 	public boolean isEnough(int minimumProductPrice) {
 		return money >= minimumProductPrice;
+	}
+
+	public void showStatus() {
+		OutputView.printUserMoneyStatus(money);
 	}
 }

@@ -1,5 +1,6 @@
 package vendingmachine.domain;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,7 +31,7 @@ public class Products {
 		return productList.size() != new HashSet<>(productList).size();
 	}
 
-	public boolean isSoldOut() {
+	public boolean isNotSoldOut() {
 		return products.stream()
 			.anyMatch(product -> product.getQuantity() != Constant.ZERO);
 	}
@@ -38,7 +39,16 @@ public class Products {
 	public int findMinimumProductPrice() {
 		return products.stream()
 			.map(Product::getPrice)
-			.min((o1, o2) -> o1 - o2)
+			.min(Comparator.comparingInt(o -> o))
 			.get();
+	}
+
+	public Product selectProduct(String productName) {
+		for (Product product : products) {
+			if (product.getName().equals(productName)) {
+				return product;
+			}
+		}
+		throw new IllegalArgumentException(Message.ERROR_NOT_FOUND_PRODUCT);
 	}
 }
