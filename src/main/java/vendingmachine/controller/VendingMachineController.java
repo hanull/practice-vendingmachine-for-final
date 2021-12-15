@@ -16,6 +16,17 @@ public class VendingMachineController {
 	public void run() {
 		Money vendingMachineMoney = getVendingMachineMoney();
 		vendingMachine.generateVendingMachineCoins(vendingMachineMoney);
+		addProducts();
+	}
+
+	private void addProducts() {
+		try {
+			OutputView.printInputProducts();
+			vendingMachine.addProducts(InputView.InputProducts());
+		} catch (IllegalArgumentException exception) {
+			OutputView.printException(exception);
+			addProducts();
+		}
 	}
 
 	private Money getVendingMachineMoney() {

@@ -1,5 +1,7 @@
 package vendingmachine.utils;
 
+import java.util.regex.Pattern;
+
 import vendingmachine.constant.Constant;
 
 public class ValidateUtils {
@@ -15,5 +17,9 @@ public class ValidateUtils {
 
 	public static boolean isDivideByMinimumCoin(int money) {
 		return money % Constant.MINIMUM_COIN == Constant.ZERO;
+	}
+
+	public static boolean isValidProductInformation(String productInformation) {
+		return Pattern.matches(Constant.PRODUCT_REGULAR_EXPRESSION, productInformation);
 	}
 }
